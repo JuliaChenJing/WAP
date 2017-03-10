@@ -1,0 +1,36 @@
+
+
+div{
+	border:1px solid black;
+	margin-left:5px;
+	margin-bottom:5px;
+	text-align:right;"
+    color:yellow;
+    background-color: orange;
+    }
+
+
+ #a{
+	
+		color:green;
+		background-color:cornflowerblue;
+		width:400px;
+		position:relative;
+		top:50px;
+		height:50px;
+	}
+
+#b{
+		    position:absolute;
+			top:0px;
+			bottom:0px;
+			left:0px;
+			width:100px;
+		    color:red;
+	    	background-color:yellow;
+}
+
+#c{
+            background-color: grey;
+ 
+}
