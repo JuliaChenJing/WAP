@@ -12,7 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import com.sun.xml.internal.txw2.Document;
 
-@WebServlet("/calculate")
+@WebServlet("/calculate")//annotation, the name of the servlet
 public class CalculatorServlet extends HttpServlet {
 
 	/**
