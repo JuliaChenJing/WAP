@@ -1,4 +1,5 @@
 package mum.cs472;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -8,19 +9,18 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/calculate")
+@WebServlet("/calculate")//annotation way,告诉系统这是一个WebServlet,/calculate is the name and path of the servlet
+//这是一个serlvet ，扩展了interface servlet
 public class CalculatorServlet extends HttpServlet {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
+	//doGet Method
 	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
+	{
 		
-		String add1 = request.getParameter("add1");
+		String add1 = request.getParameter("add1");//<input type="text" name="add1"/> name is important
 		String add2 = request.getParameter("add2");
 		String mul1 = request.getParameter("mul1");
 		String mul2 = request.getParameter("mul2");
