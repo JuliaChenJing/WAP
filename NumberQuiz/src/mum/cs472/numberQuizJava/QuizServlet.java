@@ -2,8 +2,6 @@ package mum.cs472.numberQuizJava;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Arrays;
-
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -12,64 +10,51 @@ import javax.servlet.http.HttpSession;
 
 @WebServlet("/quiz")
 public class QuizServlet extends HttpServlet {
-
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private int score = 0;
 //
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException{
-		Quiz sessQuiz = new Quiz();
-	
-		PrintWriter out = res.getWriter();
-		String currentQuestion = sessQuiz.getCurrentQuestion();
-	
-		Boolean error = false;
-		req.setAttribute("quizobj", new Quiz());
-		genQuizPage(sessQuiz, out, currentQuestion, error, req.getParameter("txtAnswer"));
+		doAction(req, res);
 	}
 	
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException {
-//		HttpSession session = req.getSession();
-		if(req.getAttribute("quizobj")==null){
-			System.out.println("--->chireko cha--");
-			req.setAttribute("quizobj", new Quiz());
-		}
-		
-//		System.out.println("test---"+req.getAttribute("test"));
-//		
-//		if(req.getAttribute("test")==null){
-//			req.setAttribute("test", 1);
-//			
-//		}
-		
-//		int te = (int)req.getAttribute("test");
-//		te++;
-//		req.setAttribute("test", te);
-		
-	
-		Quiz sessQuiz = (Quiz) req.getAttribute("quizobj");
-		System.out.println("------>>quiz obj--"+sessQuiz);
+		doAction(req, res);
+	}
+	public void doAction(HttpServletRequest req, HttpServletResponse res) throws IOException{
+
 		PrintWriter out = res.getWriter();
-		String answer = req.getParameter("txtAnswer");
-		Boolean error = true;
 		
-		System.out.println("---------------------->>>>>>2");
+		HttpSession session = req.getSession();
+		if(session.getAttribute("currentQuestion")==null)
+			session.setAttribute("currentQuestion",0);
 		
-		String currentQuestion = sessQuiz.getCurrentQuestion();
-		
-		System.out.println("---------------------->>>>>>3");
-		
-		if ((answer != null) && sessQuiz.isCorrect(answer)) {
-			error = false;
-			sessQuiz.scoreAnswer();
-			req.setAttribute("quizobj", sessQuiz);
+		if(session.getAttribute("quizobj")==null)
+			session.setAttribute("quizobj", new Quiz());
+			
+		int currentQuestion = (int)session.getAttribute("currentQuestion");
+		Quiz quiz =(Quiz)session.getAttribute("quizobj");
+		if(String.valueOf(currentQuestion).equals(quiz.getNumQuestions())){
+			 out.println("Quiz over!!!!");
 		}
-		System.out.println("----dsdsdsd---"+req.getAttribute("quizobj"));
-		System.out.println("----------esko ans--->"+(sessQuiz.getNumCorrect()));
-		System.out.println("---------------------->>>>>>4");
-		genQuizPage(sessQuiz, out, currentQuestion, error, answer);
+		
+		String answer = req.getParameter("txtAnswer");
+		session.setAttribute("currentQuestion",(currentQuestion+1));
+		
+		 boolean error = true;
+         /* i.e., if answer is correct then increment the question index and score */
+         if ((answer != null) && quiz.isCorrect(answer)) {
+             error = false;
+             quiz.scoreAnswer();
+             session.setAttribute("quizobj", quiz);
+         }
+         
+         if (quiz.getNumCorrect().equals(quiz.getNumQuestions())) {                 
+             genQuizOverPage(out);
+         }else{
+        	 genQuizPage(quiz,out,quiz.getCurrentQuestion(),error,answer);
+         } 
 	}
 
 	private void genQuizPage(Quiz sessQuiz, PrintWriter out, String currQuest, boolean error, String answer) {
