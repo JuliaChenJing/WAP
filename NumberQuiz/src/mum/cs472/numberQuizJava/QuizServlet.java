@@ -14,7 +14,9 @@ public class QuizServlet extends HttpServlet {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-//
+
+	//如果用session的话，就跳不回原来
+	//container接到用户的HTTP request，创建HttpServletRequest和HttpServletResponse
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException{
 		doAction(req, res);
 	}
@@ -25,16 +27,18 @@ public class QuizServlet extends HttpServlet {
 	public void doAction(HttpServletRequest req, HttpServletResponse res) throws IOException{
 
 		PrintWriter out = res.getWriter();
-		
+		//HttpServletRequest创建一个session
 		HttpSession session = req.getSession();
+		session.setAttribute("currentQuestion", null);
 		if(session.getAttribute("currentQuestion")==null)
 			session.setAttribute("currentQuestion",0);
 		
-		if(session.getAttribute("quizobj")==null)
-			session.setAttribute("quizobj", new Quiz());
+		if(session.getAttribute("quizObj")==null)
+			session.setAttribute("quizObj", new Quiz());
 			
 		int currentQuestion = (int)session.getAttribute("currentQuestion");
-		Quiz quiz =(Quiz)session.getAttribute("quizobj");
+		Quiz quiz =(Quiz)session.getAttribute("quizObj");
+		
 		if(String.valueOf(currentQuestion).equals(quiz.getNumQuestions())){
 			 out.println("Quiz over!!!!");
 		}
@@ -47,7 +51,7 @@ public class QuizServlet extends HttpServlet {
          if ((answer != null) && quiz.isCorrect(answer)) {
              error = false;
              quiz.scoreAnswer();
-             session.setAttribute("quizobj", quiz);
+             session.setAttribute("quizObj", quiz);
          }
          
          if (quiz.getNumCorrect().equals(quiz.getNumQuestions())) {                 
