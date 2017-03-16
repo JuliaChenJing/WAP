@@ -71,7 +71,7 @@ public class QuizServlet extends HttpServlet {
 		out.print("	<title>NumberQuiz</title>");
 		out.print("</head>");
 		out.print("<body>");
-		out.print("	<form method='post'>");
+		out.print("	<form method='post'>");// call the doPost method of this same servlet		
 		out.print("		<h3>Have fun with NumberQuiz!</h3>");
 		out.print("<p>Your current score is: ");
 		out.print(sessQuiz.getNumCorrect() + "</br></br>");
