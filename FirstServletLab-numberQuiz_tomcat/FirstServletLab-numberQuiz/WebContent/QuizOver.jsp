@@ -8,5 +8,6 @@
 </head>
 <body>
 	<p style='color: red'>The number quiz is over!</p>
+	<a href="QuizServlet">Start Again?</a>
 </body>
 </html>

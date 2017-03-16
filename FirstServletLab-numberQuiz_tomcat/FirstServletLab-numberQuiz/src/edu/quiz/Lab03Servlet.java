@@ -27,10 +27,7 @@ public class Lab03Servlet extends HttpServlet {
          * (What about back refreshing page, other ways to return to page?)
          * create a Quiz here, put in session, and call doPost
          */
-//        Quiz newQuiz = new Quiz();
-//        HttpSession sess = request.getSession();
-//        sess.setAttribute("quiz", newQuiz);  //oops  -- violation of REST idempotent principle for Get
-//        System.out.println("JUST set the quiz in the session.");
+
         doPost(request, response);
         
     }
@@ -56,12 +53,19 @@ public class Lab03Servlet extends HttpServlet {
             error = false;
             sessQuiz.markAnswerCorrect();
         }
-
+         if (error && (answer != null)) {  //REFACTOR?-- assumes answer null only when
+        	 //request.setAttribute("error", error);
+        	 request.setAttribute("error", "Your last answer was not correct! Please try again");
+         }else
+        	 request.setAttribute("error", "");
+  
         /* NEED TO see if are at end of quiz and go to finish page if so? 
          * refactor:  probably better if have an isFinished method in Quiz to encapsulate the logic. */
         if (sessQuiz.getTotNumQuestions() == sessQuiz.getCurrentQuestionIndex()) {
             System.out.println("have finished quiz");
             RequestDispatcher dispatcher2 = request.getRequestDispatcher("QuizOver.jsp");
+            sess.invalidate();
+          
             		dispatcher2.forward(request, response);
         } else {
             /* get a question and print it out */
