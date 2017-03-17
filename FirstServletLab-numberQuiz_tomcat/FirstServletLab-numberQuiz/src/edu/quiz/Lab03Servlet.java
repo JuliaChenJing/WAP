@@ -83,21 +83,28 @@ public class Lab03Servlet extends HttpServlet {
 			String currQuestHint = sessQuiz.getCurrQuestHint();
 			request.setAttribute("hint", currQuestHint);
 			request.setAttribute("score", sessQuiz.getCurrentQuestionIndex());
+			
 			try {
 				System.out.println("------age value--->" + sess.getAttribute("ageValue"));
+				
 				if (sess.getAttribute("ageValue") == null) {
+					
 					int age = Integer.parseInt(request.getParameter("age"));
+					
 					if (age < 4 || age > 100) {
 						sess.setAttribute("errorAge", "Your age should be between 4 - 100");
 						request.setAttribute("disable", "");
-					} else {
+					} 
+					else {
 						sess.setAttribute("ageValue", age);
 						request.setAttribute("disable", "disabled");
+						
 					}
-				} else {
+				} 
+				else {
 					int age = Integer.parseInt(request.getParameter("age"));
 					sess.setAttribute("ageValue", age);
-					request.setAttribute("disable", "disabled");
+					sess.setAttribute("disable", "disabled");
 				}
 
 			} catch (NumberFormatException e) {
