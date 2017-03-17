@@ -4,13 +4,10 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
- <title>Introduction to JSP demo – Hello page</title>
+<title> Introduction to JSP demo – postback page </title>
 </head>
 <body>
-    <form method='post' action='JSPServlet'>
-<input type='submit' name='btnSubmit' value='Click me '/>
-</form>
+<p>This is the postback message</p>
 </body>
 </html>
-
 
