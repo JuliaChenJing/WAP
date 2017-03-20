@@ -67,3 +67,9 @@ public class StateServlet extends HttpServlet {// 建立一个类，扩展HttpSe
 		System.out.format("hiddenState: %s\r\n", request.getParameter("hiddenState"));
 	}
 }
+/*requestState: null
+sessionState: sessionState
+applicationState: applicationState
+cookiePermanentState: cookiePermanentState
+cookieTemporaryState: cookieTemporaryState
+hiddenState: hiddenState*/
